@@ -1,0 +1,14 @@
+<?php
+$file = fopen("test.txt", "w");
+fwrite($file, "Привет, мир!");
+fclose($file);
+echo "1. Файл создан<br>";
+
+$file = fopen("test.txt", "r");
+$data = fread($file, filesize("test.txt"));
+echo "2. Содержимое файла: " . $data . "<br>";
+fclose($file);
+
+rename("test.txt", "mir.txt");
+echo "3. Файл переименован в mir.txt";
+?>
