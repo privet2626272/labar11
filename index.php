@@ -46,10 +46,71 @@ $worldExists = file_exists('folder/world.txt');
 $mirExists = file_exists('folder/mir.txt');
 
 echo "8. world.txt существует: ". ($worldExists ? "YES" : "NO")." <br>";
-echo "8. mir.txt существует: ". ($mirExists ? "YES" : "NO")." <br>";
+echo "8. mir.txt существует: ". ($mirExists ? "YES" : "NO")." <br> <br>";
 
 
+$dir = "test";
+if(!file_exists($dir)){
+if(mkdir($dir)){
+echo "1. Папка создана =) <br>";
+} else{
+echo "1. Ошибка: папка не может быть создана =(";
+}
+} else{
+echo "1. Папка уже существует =() <br>";
+}
 
+if(file_exists('test')){
+rename('test','www');
+echo "2. Папка переименована =) <br>";
+}else{
+echo "2. Папка не найдена =(<br>";
+}
+
+/*if(file_exists('www')){
+$dir = opendir('www')*/
+
+$dir = '/var/www/Низомадинова.com/www';
+if (rmdir($dir)) {
+    echo "3. Директория успешно удалена <br>";
+} else {
+    echo "3. Ошибка при удалении директории <br>";
+}
+
+
+$dir = "test";
+if(!file_exists($dir)){
+if(mkdir($dir)){
+echo "4. Папка создана =) <br>";
+} else{
+echo "4. Ошибка: папка не может быть создана =(";
+}
+} else{
+echo "4. Папка уже существует =() <br>";
+}
+
+$folders = ['images', 'videos','music'];
+foreach($folders as $folder){
+$path = 'test/'.$folder;
+if(!file_exists($path)){
+    mkdir($path, 0777, true);
+echo "cоздана папка: ".$folder."\n <br>";
+}
+}
+
+echo "5. Файлы с расширением .jpg в текущей папке:<br>";
+$jpgFiles = glob("*.jpg");
+
+if (empty($jpgFiles)) {
+    echo "Файлы .jpg не найдены.<br>";
+} else {
+    foreach ($jpgFiles as $file) {
+        echo basename($file) . " (size: " . filesize($file) . " bytes)<br>";
+    }
+}
+echo "Текущая рабочая директория: " . getcwd() . "<br><br>";
+
+    
 
 
 ?>
