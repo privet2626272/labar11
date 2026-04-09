@@ -99,5 +99,10 @@ echo '<br>';
 
 
 
+echo 'Задание 5<br>';
+echo 'Ответ:<br>';
+
+echo 'Проверка возраста Фиры (должно быть true): ' . ($worker1_new->checkAge(26) ? 'true' : 'false') . '<br>';
+echo 'Проверка возраста на 17 лет (должно быть false): ' . ($worker1_new->checkAge(17) ? 'true' : 'false') . '<br><br>';
 
 
