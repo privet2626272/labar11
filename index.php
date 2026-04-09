@@ -62,56 +62,7 @@ echo 'Имя второго работника: ' . $worker2->getName() . '<br>'
 echo 'Возраст второго работника: ' . $worker2->getAge() . '<br>';
 echo 'Зарплата второго работника: ' . $worker2->getSalary() . '<br><br>';
 
-echo 'Задание 3<br>';
-echo 'Ответ:<br>';
-
-class QWERTY extends Работник {
-    private static $allWorkers = [];
-
-    public function __construct($name, $age, $salary) {
-        parent::__construct($name, $age, $salary);
-        self::$allWorkers[] = $this;
-    }
-
-    public static function getTotalSalary() {
-        $total = 0;
-        foreach (self::$allWorkers as $worker) {
-            $total += $worker->getSalary();
-        }
-        return $total;
-    }
-}
 
 
-$worker1_new = new QWERTY('Иван', 25, 50000);
-$worker2_new = new QWERTY('Мария', 30, 60000);
-
-echo 'Сумма зарплат всех работников: ' . QWERTY::getTotalSalary() . '<br><br>';
-
-echo 'Задание 4<br>';
-echo 'Ответ:<br>';
-
-echo 'Текущий возраст Ивана: ' . $worker1_new->getAge() . '<br>';
-$worker1_new->setAge(26);
-echo 'Новый возраст Ивана: ' . $worker1_new->getAge() . '<br>';
-$worker1_new->setAge(17); 
-echo '<br>';
-
-echo 'Задание 6<br>';
-echo 'Ответ:<br>';
-
-echo 'Попытка изменить возраст Евы на 31 год:' .'<br>';
-$worker2_new->setAge(31);
-echo 'Текущий возраст Евы: ' . $worker2_new->getAge() . '<br>';
-
-echo 'Попытка изменить возраст Евы на 16 лет:<br>';
-$worker2_new->setAge(16);
-echo '<br>';
-
-echo 'Задание 5<br>';
-echo 'Ответ:<br>';
-
-echo 'Проверка возраста Фиры (должно быть true): ' . ($worker1_new->checkAge(26) ? 'true' : 'false') . '<br>';
-echo 'Проверка возраста на 17 лет (должно быть false): ' . ($worker1_new->checkAge(17) ? 'true' : 'false') . '<br><br>';
 
 
