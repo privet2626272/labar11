@@ -1,117 +1,112 @@
 <?php
 
-echo 'Задание 1<br>';
-echo 'Ответ:<br>';
+class Page
+{
+    private string $name;
+    private string $template;
 
-class Работник {
-    private $name;
-    private $age;
-    private $salary;
-
-    public function __construct($name, $age, $salary) {
-        $this->name = $name;
-        $this->age = $age;
-        $this->salary = $salary;
+    public function __construct()
+    {
+        $this->name = "page";
+        $this->template = "
+            <div class='page-content'>
+                <h1>Добро пожаловать на сайт о Мальдивах!</h1>
+                <p>Откройте для себя райские острова с белоснежными пляжами и кристально чистой водой.</p>
+                <div class='welcome-image'>
+                    <img src='https://avatars.mds.yandex.net/i?id=52032fd1a0d3a34c3108e1feb98d8c80_l-5243656-images-thumbs&n=13' alt='Мальдивы' style='width:100%;border-radius:10px;'>
+                </div>
+            </div>";
     }
 
-    public function getName() {
-        return $this->name;
+    public function render(): void
+    {
+        echo $this->template;
+    }
+}
+
+class BlogPage extends Page
+{
+    private string $name;
+    private string $template;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->name = "blog";
+        $this->template = "
+            <div class='blog-content'>
+                <h1>Отдых на Мальдивах</h1>
+                <p>Лучшие курорты и достопримечательности райских островов</p>
+
+                <div class='cards'>
+                    <div class='card'>
+                        <img src='https://fs.tonkosti.ru/sized/c960x400/2f/tz/2ftze2f51br4osg00sswws0cs.jpg' alt='Курорт №1' class='card-image'>
+                        <h3>Курорт №1</h3>
+                        <p>Роскошные виллы над водой, белоснежные пляжи.</p>
+                    </div>
+
+            <div class='card'>
+                <img src='https://avatars.mds.yandex.net/i?id=890d9c40dfcdbeb4404c04d11899f189af0767e4-12498607-images-thumbs&n=13' alt='Курорт №2' class='card-image'>
+                <h3>Курорт №2</h3>
+                <p>Дайвинг среди коралловых рифов, богатый подводный мир.</p>
+            </div>
+
+            <div class='card'>
+                <img src='https://de87ve0y4m3tc.cloudfront.net/comohotels.com-2459770069/cms/cache/v2/632cc832d98d5.jpg/1120x590/fit/80/e26bfed2ec0dc49da13be0f7bbf6bec7.jpg' alt='Курорт №3' class='card-image'>
+                <h3>Курорт №3</h3>
+                <p>Романтический отдых для пар, уединённые острова.</p>
+            </div>
+        </div>
+    </div>";
     }
 
-    public function getAge() {
-        return $this->age;
+    public function render(): void
+    {
+        echo $this->template;
     }
+}
+?>
+<!DOCTYPE html>
+<html lang="ru">
+<link rel="stylesheet" href="/style.css">
+<head>
+    <meta charset="UTF-8">
+    <title>Trip</title>
+    
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1> Путешествие на Мальдивы </h1>
+            <p style="color:white;font-size:1.2em;">Райские острова ждут вас!</p>
+        </header>
 
-    public function getSalary() {
-        return $this->salary;
-    }
+       
+        <div class="nav-buttons">
+            <a href="index.php?page=page" class="btn">🏠 Главная страница</a>
+            <a href="index.php?page=blog" class="btn">🏝️ Блог о Мальдивах</a>
+        </div>
 
-    public function setAge($newAge) {
-        if ($this->checkAge($newAge)) {
-            $this->age = $newAge;
+        <hr>
+
+        <?php
+       
+        $pageType = $_GET['page'] ?? 'page'; 
+
+        if ($pageType === 'page') {
+            $page = new Page();
+            $page->render();
+        } elseif ($pageType === 'blog') {
+            $blogPage = new BlogPage();
+            $blogPage->render();
         } else {
-            echo 'Вы нам не подходите<br>';
+            
+            $defaultPage = new Page();
+            $defaultPage->render();
         }
-    }
+        ?>
+    </div>
+</body>
+</html>
 
-    public function checkAge($age) {
-        return $age >= 18;
-    }
-}
-
-
-$worker1 = new Работник('Фира', 25, 50000);
-$worker2 = new Работник('Ева', 30, 60000);
-
-
-$sumSalary = $worker1->getSalary() + $worker2->getSalary();
-$sumAge = $worker1->getAge() + $worker2->getAge();
-
-echo 'Сумма зарплат: ' . $sumSalary . '<br>';
-echo 'Сумма возрастов: ' . $sumAge . '<br><br>';
-
-echo 'Задание 2<br>';
-echo 'Ответ:<br>';
-
-echo 'Имя 1 работника: ' . $worker1->getName() . '<br>';
-echo 'Возраст 1 работника: ' . $worker1->getAge() . '<br>';
-echo 'Зарплата 1 работника: ' . $worker1->getSalary() . '<br><br>';
-
-
-echo 'Имя второго работника: ' . $worker2->getName() . '<br>';
-echo 'Возраст второго работника: ' . $worker2->getAge() . '<br>';
-echo 'Зарплата второго работника: ' . $worker2->getSalary() . '<br><br>';
-
-echo 'Задание 3<br>';
-echo 'Ответ:<br>';
-
-class QWERTY extends Работник {
-    private static $allWorkers = [];
-
-    public function __construct($name, $age, $salary) {
-        parent::__construct($name, $age, $salary);
-        self::$allWorkers[] = $this;
-    }
-
-    public static function getTotalSalary() {
-        $total = 0;
-        foreach (self::$allWorkers as $worker) {
-            $total += $worker->getSalary();
-        }
-        return $total;
-    }
-}
-
-
-$worker1_new = new QWERTY('Иван', 25, 50000);
-$worker2_new = new QWERTY('Мария', 30, 60000);
-
-echo 'Сумма зарплат всех работников: ' . QWERTY::getTotalSalary() . '<br><br>';
-
-echo 'Задание 4<br>';
-echo 'Ответ:<br>';
-
-echo 'Текущий возраст Ивана: ' . $worker1_new->getAge() . '<br>';
-$worker1_new->setAge(26);
-echo 'Новый возраст Ивана: ' . $worker1_new->getAge() . '<br>';
-$worker1_new->setAge(17); 
-echo '<br>';
-
-echo 'Задание 5<br>';
-echo 'Ответ:<br>';
-
-echo 'Проверка возраста Фиры (должно быть true): ' . ($worker1_new->checkAge(26) ? 'true' : 'false') . '<br>';
-echo 'Проверка возраста на 17 лет (должно быть false): ' . ($worker1_new->checkAge(17) ? 'true' : 'false') . '<br><br>';
-
-
-echo 'Задание 6<br>';
-echo 'Ответ:<br>';
-
-echo 'Попытка изменить возраст Евы на 31 год:' .'<br>';
-$worker2_new->setAge(31);
-echo 'Текущий возраст Евы: ' . $worker2_new->getAge() . '<br>';
-
-echo 'Попытка изменить возраст Евы на 16 лет:<br>';
-$worker2_new->setAge(16);
-echo '<br>';
 
