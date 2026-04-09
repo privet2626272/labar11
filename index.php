@@ -62,6 +62,32 @@ echo 'Имя второго работника: ' . $worker2->getName() . '<br>'
 echo 'Возраст второго работника: ' . $worker2->getAge() . '<br>';
 echo 'Зарплата второго работника: ' . $worker2->getSalary() . '<br><br>';
 
+echo 'Задание 3<br>';
+echo 'Ответ:<br>';
+
+class QWERTY extends Работник {
+    private static $allWorkers = [];
+
+    public function __construct($name, $age, $salary) {
+        parent::__construct($name, $age, $salary);
+        self::$allWorkers[] = $this;
+    }
+
+    public static function getTotalSalary() {
+        $total = 0;
+        foreach (self::$allWorkers as $worker) {
+            $total += $worker->getSalary();
+        }
+        return $total;
+    }
+}
+
+
+$worker1_new = new QWERTY('Иван', 25, 50000);
+$worker2_new = new QWERTY('Мария', 30, 60000);
+
+echo 'Сумма зарплат всех работников: ' . QWERTY::getTotalSalary() . '<br><br>';
+
 
 
 
