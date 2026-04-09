@@ -1,116 +1,117 @@
 <?php
-$file = fopen("test.txt", "w");
-fwrite($file, "Привет, мир!");
-fclose($file);
-echo "1. Файл создан и записан =)<br>";
 
-$file = fopen("test.txt", "r");
-$data = fread($file, filesize("test.txt"));
-echo "2. Что внутри файла: " . $data . "<br>";
-fclose($file);
+echo 'Задание 1<br>';
+echo 'Ответ:<br>';
 
+class Работник {
+    private $name;
+    private $age;
+    private $salary;
 
-rename ("test.txt", "mir.txt") or die ("Ошибка переименования файла");
-echo "3. Файл переименован =)<br>";
+    public function __construct($name, $age, $salary) {
+        $this->name = $name;
+        $this->age = $age;
+        $this->salary = $salary;
+    }
 
-$dir = "folder";
-if(!file_exists($dir)){
-if(mkdir($dir)){
-echo "4. Папка создана =)";
-} else{
-echo "4. Ошибка: папка не может быть создана =(";
-}
-} else{
-echo "4. Папка уже существует =()";
-}
-rename('mir.txt', 'folder/mir.txt');
-echo "4. Файл перенесен в папку folder =)<br>";
+    public function getName() {
+        return $this->name;
+    }
 
-copy('folder/mir.txt','folder/world.txt');
-echo "5. Файл скопирован в файл world.txt =)<br>";
+    public function getAge() {
+        return $this->age;
+    }
 
-$sizeBytes = filesize('folder/world.txt');
-$sizeKB = $sizeBytes / 1024;
-$sizeMB = $sizeBytes / (1024 * 1024);
-$sizeGB = $sizeBytes / (1024 * 1024 * 1024);
+    public function getSalary() {
+        return $this->salary;
+    }
 
-echo "6. в байтах - " .$sizeBytes . "\n";
-echo "6. в килобайтах - " .$sizeKB . "\n";
-echo "6. в мегабайтах - " .$sizeMB . "\n";
-echo "6. в гигабайтах - " .$sizeGB . "\n <br>";
+    public function setAge($newAge) {
+        if ($this->checkAge($newAge)) {
+            $this->age = $newAge;
+        } else {
+            echo 'Вы нам не подходите<br>';
+        }
+    }
 
-unlink('folder/world.txt');
-echo "7. Файл world.txt удален =(  <br>";
-
-$worldExists = file_exists('folder/world.txt');
-$mirExists = file_exists('folder/mir.txt');
-
-echo "8. world.txt существует: ". ($worldExists ? "YES" : "NO")." <br>";
-echo "8. mir.txt существует: ". ($mirExists ? "YES" : "NO")." <br> <br>";
-
-
-$dir = "test";
-if(!file_exists($dir)){
-if(mkdir($dir)){
-echo "1. Папка создана =) <br>";
-} else{
-echo "1. Ошибка: папка не может быть создана =(";
-}
-} else{
-echo "1. Папка уже существует =() <br>";
-}
-
-if(file_exists('test')){
-rename('test','www');
-echo "2. Папка переименована =) <br>";
-}else{
-echo "2. Папка не найдена =(<br>";
-}
-
-/*if(file_exists('www')){
-$dir = opendir('www')*/
-
-$dir = '/var/www/Низомадинова.com/www';
-if (rmdir($dir)) {
-    echo "3. Директория успешно удалена <br>";
-} else {
-    echo "3. Ошибка при удалении директории <br>";
-}
-
-
-$dir = "test";
-if(!file_exists($dir)){
-if(mkdir($dir)){
-echo "4. Папка создана =) <br>";
-} else{
-echo "4. Ошибка: папка не может быть создана =(";
-}
-} else{
-echo "4. Папка уже существует =() <br>";
-}
-
-$folders = ['images', 'videos','music'];
-foreach($folders as $folder){
-$path = 'test/'.$folder;
-if(!file_exists($path)){
-    mkdir($path, 0777, true);
-echo "cоздана папка: ".$folder."\n <br>";
-}
-}
-
-echo "5. Файлы с расширением .jpg в текущей папке:<br>";
-$jpgFiles = glob("*.jpg");
-
-if (empty($jpgFiles)) {
-    echo "Файлы .jpg не найдены.<br>";
-} else {
-    foreach ($jpgFiles as $file) {
-        echo basename($file) . " (size: " . filesize($file) . " bytes)<br>";
+    public function checkAge($age) {
+        return $age >= 18;
     }
 }
-echo "Текущая рабочая директория: " . getcwd() . "<br><br>";
-
-    
 
 
-?>
+$worker1 = new Работник('Фира', 25, 50000);
+$worker2 = new Работник('Ева', 30, 60000);
+
+
+$sumSalary = $worker1->getSalary() + $worker2->getSalary();
+$sumAge = $worker1->getAge() + $worker2->getAge();
+
+echo 'Сумма зарплат: ' . $sumSalary . '<br>';
+echo 'Сумма возрастов: ' . $sumAge . '<br><br>';
+
+echo 'Задание 2<br>';
+echo 'Ответ:<br>';
+
+echo 'Имя 1 работника: ' . $worker1->getName() . '<br>';
+echo 'Возраст 1 работника: ' . $worker1->getAge() . '<br>';
+echo 'Зарплата 1 работника: ' . $worker1->getSalary() . '<br><br>';
+
+
+echo 'Имя второго работника: ' . $worker2->getName() . '<br>';
+echo 'Возраст второго работника: ' . $worker2->getAge() . '<br>';
+echo 'Зарплата второго работника: ' . $worker2->getSalary() . '<br><br>';
+
+echo 'Задание 3<br>';
+echo 'Ответ:<br>';
+
+class QWERTY extends Работник {
+    private static $allWorkers = [];
+
+    public function __construct($name, $age, $salary) {
+        parent::__construct($name, $age, $salary);
+        self::$allWorkers[] = $this;
+    }
+
+    public static function getTotalSalary() {
+        $total = 0;
+        foreach (self::$allWorkers as $worker) {
+            $total += $worker->getSalary();
+        }
+        return $total;
+    }
+}
+
+
+$worker1_new = new QWERTY('Иван', 25, 50000);
+$worker2_new = new QWERTY('Мария', 30, 60000);
+
+echo 'Сумма зарплат всех работников: ' . QWERTY::getTotalSalary() . '<br><br>';
+
+echo 'Задание 4<br>';
+echo 'Ответ:<br>';
+
+echo 'Текущий возраст Ивана: ' . $worker1_new->getAge() . '<br>';
+$worker1_new->setAge(26);
+echo 'Новый возраст Ивана: ' . $worker1_new->getAge() . '<br>';
+$worker1_new->setAge(17); 
+echo '<br>';
+
+echo 'Задание 6<br>';
+echo 'Ответ:<br>';
+
+echo 'Попытка изменить возраст Евы на 31 год:' .'<br>';
+$worker2_new->setAge(31);
+echo 'Текущий возраст Евы: ' . $worker2_new->getAge() . '<br>';
+
+echo 'Попытка изменить возраст Евы на 16 лет:<br>';
+$worker2_new->setAge(16);
+echo '<br>';
+
+echo 'Задание 5<br>';
+echo 'Ответ:<br>';
+
+echo 'Проверка возраста Фиры (должно быть true): ' . ($worker1_new->checkAge(26) ? 'true' : 'false') . '<br>';
+echo 'Проверка возраста на 17 лет (должно быть false): ' . ($worker1_new->checkAge(17) ? 'true' : 'false') . '<br><br>';
+
+
