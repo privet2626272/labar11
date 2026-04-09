@@ -88,6 +88,15 @@ $worker2_new = new QWERTY('Мария', 30, 60000);
 
 echo 'Сумма зарплат всех работников: ' . QWERTY::getTotalSalary() . '<br><br>';
 
+echo 'Задание 4<br>';
+echo 'Ответ:<br>';
+
+echo 'Текущий возраст Ивана: ' . $worker1_new->getAge() . '<br>';
+$worker1_new->setAge(26);
+echo 'Новый возраст Ивана: ' . $worker1_new->getAge() . '<br>';
+$worker1_new->setAge(17); 
+echo '<br>';
+
 
 
 
