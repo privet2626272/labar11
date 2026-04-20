@@ -25,4 +25,4 @@ class Rectangle extends Figure implements Count{
 $rectangle1 = new Rectangle(5, 5);
 echo "Площадь первого прямоугольника равна " . $rectangle1->getArea() . "см2" . "<br>";
 $rectangle2 = new Rectangle(2, 21);
-echo "Площадь второго прямоугольника равна " . $rectangle2->getArea() . "см2" . "<br>";
+echo "Площадь второго прямоугольника равна " . $rectangle2->getArea() . "см2" ;
